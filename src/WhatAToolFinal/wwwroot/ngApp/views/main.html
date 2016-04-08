@@ -1,0 +1,35 @@
+﻿<!--Main Page Layout
+Table for all tools
+Equipment|Category|Status|Location|Checked Out By|Expected Return Date-->
+<table class="table table-striped table-bordered text-center">
+    <tr>
+        <td>Tool Name</td>
+        <td>Category</td>
+        <td>Status</td>
+        <td>Location</td>
+        <td>Borrower</td>
+        <td>Return Date</td>
+    </tr>
+    <tr ng-repeat="tool in controller.toolList">
+        <td><a ui-sref="toolDetail({id:{{tool.id}}})">{{tool.name}}</a></td> <!--Will navigate to tool specific page-->
+        <td>{{tool.category}}</td>
+        <td>{{tool.status}} </td>
+        <td>{{tool.location}}</td>
+        <td><a ui-sref="profile">John Smith</a></td>
+        <td>--</td>
+    </tr>
+
+</table>
+<hr />
+<table class="table table-striped table-bordered text-center">
+    <tr>
+        <td>Person</td>
+        <td>Title</td>
+        
+    </tr>
+    <tr ng-repeat="u in controller.userList">
+        <td><a ui-sref="profileDetail({id:{{u.id}}})">{{u.name}}</a></td>
+        <td>{{u.title}}</td>
+    </tr>
+
+</table>

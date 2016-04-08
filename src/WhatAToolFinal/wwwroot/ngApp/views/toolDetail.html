@@ -1,0 +1,23 @@
+﻿<h1>{{controller.tool.name}}</h1>
+
+<div>Name: {{controller.tool.name}} </div><br />
+<div>Tool ID: {{controller.tool.id}}</div><br />
+My Tools:
+<table class="table table-bordered table-striped">
+    <tr>
+        <td class="text-center">Tool Name:</td>
+        <td class="text-center">Status:</td>
+        <td class="text-center">Person:</td>
+    </tr>
+    <tr ng-repeat="t in controller.likeTools">
+        <td class="text-center"><a ui-sref="toolDetail({id:{{t.id}}})">{{t.name}}</a></td>
+        <td class="text-center">{{t.status}}</td>
+        <td class="text-center">--</td>
+
+        
+       
+        <!--on click this will changed the status/return date and clear the person
+        on this current tool.-->
+    </tr>
+
+</table>

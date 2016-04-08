@@ -1,0 +1,32 @@
+<h1>Profile of {{controller.user.name}}</h1>
+
+<div>Name: {{controller.user.name}} </div><br />
+<div>Title: {{controller.user.title}}</div><br />
+
+<div ng-show="controller.user.isAdmin">
+    <!--Need list page to bring up all the tools and users
+     (can delete straight from this page). Need and Add/Edit page-->
+
+    Administrator: <a ui-sref="adminList">Add/Edit/Delete Tools and Users</a><br />
+   <br />
+</div>
+
+
+My Tools:
+<table class="table table-bordered table-striped">
+    <tr>
+        <td class="text-center">Tool Name:</td>
+        <td class="text-center">Return Date:</td>
+        <td class="text-center">Return Tool</td>
+    </tr>
+    <tr ng-repeat="tool in controller.user.toolList">
+        <td><a ui-sref="toolDetail({id:{{tool.id}}})">{{tool.name}}</a></td> <!--Link to the tool modal if possible-->
+        <td>12/12/2016</td>
+        <td><a ui-sref="profile" ng-click="controller.returnTool(tool.id)">Return</a></td> 
+        <!--on click this will changed the status/return date and clear the person
+        on this current tool.-->
+    </tr>
+
+
+
+</table>
