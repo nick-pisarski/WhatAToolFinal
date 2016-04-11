@@ -3,40 +3,35 @@
     <title>What-A-Tool Tool Management Service</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
     <base href="/" />
 </head>
 <body ng-controller="AccountController as account">
+    <div id="bg-img" />
     <div class="container">
-        <h1>What-A-Tool</h1>
-        <div>
-          <a href="/">Home</a> /
-           <a href="/about">About</a>
-
-           / <a href="/secret">Secret</a> /
-           <a href="/login" ng-show="!account.isLoggedIn()">Login</a>
-           <a href="#" ng-click="account.logout()" ng-show="account.isLoggedIn()">Logout</a>
-           <div ng-show="account.isLoggedIn()">
-               [{{account.getUserName()}}]
-           </div> 
-        </div>
-        <hr />
         <div class="row">
             <div class="col-md-3">
-                <a ui-sref="main"><img src="~/images/WATALogo.jpg" height="120" width="120" /></a>
+                <a ui-sref="main" ng-disabled="account.isLoggedIn()"><img src="~/images/WATALogo.jpg" height="120" width="120" /></a>
             </div>
             <div class="col-md-6 text-center">
                 <h1>Welcome to WhatA Tool</h1>
             </div>
-            <div class="col-md-3 text-right">
+            <div class="col-md-3 text-right mainView">
                 <a ui-sref="main">Home</a> <br />
-                <a ui-sref="profile">Profile</a>
+                <a ui-sref="profileDetail({id: account.getUserId() })" ng-class="{disabled: !account.isLoggedIn()}">Profile</a> <br />
+                <a ui-sref="login" ng-show="!account.isLoggedIn()">Login</a>
+                <a ui-sref="login" ng-click="account.logout()" ng-show="account.isLoggedIn()">Logout</a>
+                <div ng-show="account.isLoggedIn()">
+                    [{{account.getUserName()}}]
+                </div>
             </div>
 
         </div>
         <hr />
         <div class="row mainView">
             <ui-view></ui-view>
-        </div></div>
+        </div>
+    </div>
 
     <!-- Library Files -->
     <script src="~/lib/angular/angular.js"></script>

@@ -1,6 +1,9 @@
-body {
-    padding-top: 10px;
-    padding-bottom: 20px;
+#bg-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('../images/hrt-concrete-wall-01.jpg');
     background-size: cover;
 }
@@ -36,7 +39,7 @@ textarea {
 }
 
 img {
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 .mainView{
@@ -47,4 +50,8 @@ img {
 .smLink{
     cursor: pointer;
     font-size: 9px;
+}
+
+.disabled {
+    cursor: not-allowed;
 }

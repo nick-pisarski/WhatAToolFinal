@@ -9,25 +9,25 @@ namespace WhatAToolFinal {
         $stateProvider
             .state('main', {
                 url: '/',
-                templateUrl: '/ngApp/main.html',
+                templateUrl: '/ngApp/views/main.html',
                 controller: WhatAToolFinal.Controllers.MainController,
                 controllerAs: 'controller'
             })
             .state('toolDetail', {
                 url: '/tool/details/:id',
-                templateUrl: '/ngApp/toolDetail.html',
+                templateUrl: '/ngApp/views/toolDetail.html',
                 controller: WhatAToolFinal.Controllers.ToolDetailController,
                 controllerAs: 'controller'
             })
             .state('profileDetail', {
                 url: '/profile/details/:id',
-                templateUrl: '/ngApp/profile.html',
+                templateUrl: '/ngApp/views/profile.html',
                 controller: WhatAToolFinal.Controllers.ProfileDetailController,
                 controllerAs: 'controller'
             })
             .state('adminList', {
                 url: '/admin/list',
-                templateUrl: '/ngApp/adminList.html',
+                templateUrl: '/ngApp/views/adminList.html',
                 controller: WhatAToolFinal.Controllers.AdminListController,
                 controllerAs: 'controller'
             })

@@ -2,11 +2,14 @@ namespace WhatAToolFinal.Controllers {
 
     export class AccountController {
         public externalLogins;
-
+       
         public getUserName() {
             return this.accountService.getUserName();
         }
 
+        public getUserId() {
+            return this.accountService.getUserId();
+        }
         public getClaim(type) {
             return this.accountService.getClaim(type);
         }
@@ -14,7 +17,7 @@ namespace WhatAToolFinal.Controllers {
         public isLoggedIn() {
             return this.accountService.isLoggedIn();
         }
-
+        
         public logout() {
             this.accountService.logout();
             this.$location.path('/');

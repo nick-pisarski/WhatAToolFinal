@@ -4,17 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using WhatAToolFinal.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.Data.Entity;
+using System.Security.Claims;
 
 namespace WhatAToolFinal.Models
 {
     public class SampleData2
     {
 
-        public static void Initialize(IServiceProvider serviceProvider)
+        public async static void Initialize(IServiceProvider serviceProvider)
         {
             var db = serviceProvider.GetService<ApplicationDbContext>();
+            var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            db.Database.Migrate();
 
             //Category List
+#region
             List<Category> cats = new List<Category>() {
                 new Category { Name = "Drill" },
                 new Category { Name = "Hammer" },
@@ -26,7 +32,7 @@ namespace WhatAToolFinal.Models
 
             for (int i = 0; i < cats.Count; i++)
             {
-                var dbCat = db.Categorys.First(c => c.Name == cats[i].Name);
+                var dbCat = db.Categorys.FirstOrDefault(c => c.Name == cats[i].Name);
                 cats[i] = dbCat ?? cats[i];
                 if (dbCat != cats[i])
                 {
@@ -34,33 +40,109 @@ namespace WhatAToolFinal.Models
                 }
             }
             db.SaveChanges();
-
+            #endregion
             //User dummy list - 6 total
             #region 
-            //Person = Name, Title, ImgUrl, IsAdmin
-            List<Person> people = new List<Person>() {
-                new Person { Name = "Gary Johnson", Title = "Technician", IsAdmin = false },
-                new Person { Name = "Ben Williams", Title = "Mechanic", IsAdmin = false },
-                new Person { Name = "Chris Conner", Title = "Custodian", IsAdmin = false },
-                new Person { Name = "John Francis", Title = "Lead Technichan", IsAdmin = true },
-                new Person { Name = "Mark O'Mally", Title = "Head Mechanic", IsAdmin = true },
-                new Person { Name = "Art O'Mally", Title = "Warehouse Manager", IsAdmin = true }
-            };
-            #endregion
-
-            for (int i = 0; i < people.Count; i++)
+            //ApplicationUser = Name, Title, ImgUrl
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            var gary = await userManager.FindByNameAsync("gary@email.com");
+            if (gary == null)
             {
-                var dbPerson = db.Persons.First(p => p.Name == people[i].Name);
-                people[i] = dbPerson ?? people[i];
-                if (people[i] != dbPerson)
+                // create user
+                gary = new ApplicationUser
                 {
-                    // use user manager
-                    db.Persons.Add(people[i]);
-                }
+                    UserName = "gary@email.com",
+                    Email = "gary@email.com", 
+                    Name = "Gary Johnson",
+                    Title = "Technician"
+                };
+                await userManager.CreateAsync(gary, "Secret123!");
+                
             }
-            db.SaveChanges();
+            users.Add(gary);
 
+            var mark = await userManager.FindByNameAsync("mark@email.com");
+            if (mark == null)
+            {
+                // create user
+                mark = new ApplicationUser
+                {
+                    UserName = "mark@email.com",
+                    Email = "mark@email.com",
+                    Name = "Mark O'Malley",
+                    Title = "Warehouse Manager"
+                };
+                await userManager.CreateAsync(mark, "Secret123!");
+                // add claims
+                await userManager.AddClaimAsync(mark, new Claim("IsAdmin", "true"));
+            }
+            users.Add(mark);
 
+            var art = await userManager.FindByNameAsync("art@email.com");
+            if (art == null)
+            {
+                // create user
+                art = new ApplicationUser
+                {
+                    UserName = "art@email.com",
+                    Email = "art@email.com",
+                    Name = "Art O'Malley",
+                    Title = "Lead Mechanic"
+                };
+                await userManager.CreateAsync(art, "Secret123!");
+                // add claims
+                await userManager.AddClaimAsync(art, new Claim("IsAdmin", "true"));
+            }
+            users.Add(art);
+
+            var ben = await userManager.FindByNameAsync("ben@email.com");
+            if (ben == null)
+            {
+                // create user
+                ben = new ApplicationUser
+                {
+                    UserName = "ben@email.com",
+                    Email = "ben@email.com",
+                    Name = "Ben Williams",
+                    Title = "Mechanic"
+                };
+                await userManager.CreateAsync(ben, "Secret123!");
+                
+            }
+            users.Add(ben);
+
+            var chris = await userManager.FindByNameAsync("chris@email.com");
+            if (chris == null)
+            {
+                // create user
+                chris = new ApplicationUser
+                {
+                    UserName = "chris@email.com",
+                    Email = "chris@email.com",
+                    Name = "Chris Conner",
+                    Title = "Custodian"
+                };
+                await userManager.CreateAsync(chris, "Secret123!");
+               
+            }
+            users.Add(chris);
+
+            var john = await userManager.FindByNameAsync("john@email.com");
+            if (john == null)
+            {
+                // create user
+                john = new ApplicationUser
+                {
+                    UserName = "john@email.com",
+                    Email = "john@email.com",
+                    Name = "John Francis",
+                    Title = "Mechanic"
+                };
+                await userManager.CreateAsync(john, "Secret123!");
+                
+            }
+            users.Add(john);
+            #endregion
             //Tool dummy list - 8 total
             #region
             //Tool = Name, Manufacturer, Category, Status, Location, ImgUrl, MachineHours
@@ -150,7 +232,7 @@ namespace WhatAToolFinal.Models
 
             for (int i = 0; i < tools.Count; i++)
             {
-                var dbTool = db.Tools.First(t => t.Name == tools[i].Name);
+                var dbTool = db.Tools.FirstOrDefault(t => t.Name == tools[i].Name);
                 tools[i] = dbTool ?? tools[i];
                 if (tools[i] != dbTool)
                 {
@@ -160,41 +242,41 @@ namespace WhatAToolFinal.Models
             }
             db.SaveChanges();
 
-            //ToolPerson dummy list
+            //ToolApplicationUser dummy list
             #region
-            //ToolPerson = PersonId, ToolId, CheckOutDate, ReturnDate
-            List<ToolPerson> tp = new List<ToolPerson> {
-            new ToolPerson
+            //ToolApplicationUser = PersonId, ToolId, CheckOutDate, ReturnDate
+            List<ToolApplicationUser> tp = new List<ToolApplicationUser> {
+            new ToolApplicationUser
             {
-                PersonId = people[0].Id,
+                UserId = users[1].Id,
                 ToolId = tools[2].Id,
                 CheckOutDate = new DateTime(2015, 7, 25), //(yyyy,mm,dd)
                 ReturnDate = new DateTime(2015, 7, 26),
             },
-            new ToolPerson
+            new ToolApplicationUser
             {
-                PersonId = people[2].Id,
+                UserId = users[2].Id,
                 ToolId = tools[4].Id,
                 CheckOutDate = new DateTime(2015, 7, 25),
                 ReturnDate = new DateTime(2015, 7, 31),
             },
-            new ToolPerson
+            new ToolApplicationUser
             {
-                PersonId = people[3].Id,
+                UserId = users[3].Id,
                 ToolId = tools[7].Id,
                 CheckOutDate = new DateTime(2015, 8, 25),
 
             },
-            new ToolPerson
+            new ToolApplicationUser
             {
-                PersonId = people[3].Id,
+                UserId = users[3].Id,
                 ToolId = tools[4].Id,
                 CheckOutDate = new DateTime(2015, 7, 25),
                 ReturnDate = new DateTime(2015, 7, 27),
             },
-            new ToolPerson
+            new ToolApplicationUser
             {
-                PersonId = people[5].Id,
+                UserId = users[5].Id,
                 ToolId = tools[6].Id,
                 CheckOutDate = new DateTime(2015, 7, 25),
 
@@ -203,12 +285,12 @@ namespace WhatAToolFinal.Models
             #endregion
             for (int i = 0; i < tp.Count; i++)
             {
-                var dbToolPerson = db.ToolPersons.FirstOrDefault(t => t.Id == tp[i].Id);
-                tp[i] = dbToolPerson ?? tp[i];
-                if (tp[i] != dbToolPerson)
+                var dbToolApplicationUser = db.ToolApplicationUsers.FirstOrDefault(t => t.Id == tp[i].Id);
+                tp[i] = dbToolApplicationUser ?? tp[i];
+                if (tp[i] != dbToolApplicationUser)
                 {
                     // use user manager
-                    db.ToolPersons.Add(tp[i]);
+                    db.ToolApplicationUsers.Add(tp[i]);
                 }
             }
             db.SaveChanges();

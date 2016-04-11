@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatAToolFinal.Models;
+using WhatAToolFinal.Services.ModelDTO;
 
 namespace WhatAToolFinal.Infastructure
 {
@@ -11,11 +12,17 @@ namespace WhatAToolFinal.Infastructure
     {
 
         public ToolRepository(ApplicationDbContext db) : base(db) { }
-        
-        public IQueryable<Tool> GetListOfToolsByCategory(Category category)
+
+        public IQueryable<Tool> GetListOfToolsByCategory(string category)
         {
-            return _db.Tools.Where(t => t.Category == category).Select(t => t);
-        }       
+            return _db.Tools.Where(t => t.Category.Name == category).Select(t => t);
+        }
+
+        public IQueryable<Tool> GetToolById(int id)
+        {
+            return _db.Tools.Where(t => t.Id == id).Select(t => t);
+        }
 
     }
 }
+

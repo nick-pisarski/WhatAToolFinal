@@ -6,7 +6,9 @@ namespace WhatAToolFinal.Services {
         private storeUserInfo(userInfo) {
             // store user name
             this.$window.sessionStorage.setItem('userName', userInfo.userName);
-
+            // store user id
+            this.$window.sessionStorage.setItem('userId', userInfo.id);
+            console.log(userInfo.id);
             // store claims
             this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
         }
@@ -15,6 +17,9 @@ namespace WhatAToolFinal.Services {
             return this.$window.sessionStorage.getItem('userName');
         }
 
+        public getUserId() {
+            return this.$window.sessionStorage.getItem('userId');
+        }
 
         public getClaim(type) {
             var allClaims = JSON.parse(this.$window.sessionStorage.getItem('claims'));
@@ -25,7 +30,8 @@ namespace WhatAToolFinal.Services {
         public login(loginUser) {
             return this.$q((resolve, reject) => {
                 this.$http.post('/api/account/login', loginUser).then((result) => {
-                        this.storeUserInfo(result.data);
+                    this.storeUserInfo(result.data);
+                    
                         resolve();
                 }).catch((result) => {
                     var messages = this.flattenValidation(result.data);
@@ -33,6 +39,7 @@ namespace WhatAToolFinal.Services {
                 });
             });
         }
+
 
         public register(userLogin) {
             return this.$q((resolve, reject) => {
@@ -58,7 +65,10 @@ namespace WhatAToolFinal.Services {
         }
 
         public isLoggedIn() {
-            return this.$window.sessionStorage.getItem('userName');
+            if (this.$window.sessionStorage.getItem('userName') == null) {
+                return false;
+            }
+            return true;
         }
 
         // associate external login (e.g., Twitter) with local user account

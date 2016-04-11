@@ -58,15 +58,16 @@ namespace WhatAToolFinal
 
             //My Services
             services.AddTransient<ToolService>();
-            services.AddTransient<PersonService>();
+            services.AddTransient<ApplicationUserService>();
 
 
             //Repositories
             services.AddScoped<ToolRepository>();
-            services.AddScoped<PersonRepository>();
+            services.AddScoped<ApplicationUserRepository>();
+            services.AddScoped<ToolApplicationUserRepository>();
 
-            
-            
+
+
             // convert Pascal to Camel
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ContractResolver =
@@ -131,8 +132,8 @@ namespace WhatAToolFinal
 
 
             // initialize sample data
-            SampleData.Initialize(app.ApplicationServices).Wait();
             SampleData2.Initialize(app.ApplicationServices);
+           
 
         }
 

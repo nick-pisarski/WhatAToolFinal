@@ -46,12 +46,12 @@ namespace WhatAToolFinal.Controllers
             var claims = await _userManager.GetClaimsAsync(user);
             var vm = new UserViewModel
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Claims = claims.ToDictionary(c => c.Type, c => c.Value)
             };
             return vm;
         }
-
         //
         // POST: /Account/Login
         [HttpPost("login")]
@@ -68,6 +68,7 @@ namespace WhatAToolFinal.Controllers
                 {
                     _logger.LogInformation(1, "User logged in.");
                     var user = await GetUser(model.Email);
+                    
                     return Ok(user);
                 }
                 if (result.RequiresTwoFactor)

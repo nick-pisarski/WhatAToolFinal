@@ -19,7 +19,7 @@ namespace WhatAToolFinal.Controllers {
                 });
         }
         public getUserList() {
-            this.$http.get('/api/users')
+            this.$http.get('/api/ApplicationUser')
                 .then((response) => {
                     this.userList = response.data;
                 })
@@ -35,7 +35,8 @@ namespace WhatAToolFinal.Controllers {
         public likeTools; //a list of all the tools that are the same category
 
         public getLikeTools() {
-            this.$http.get(`/api/tools/${this.tool.category}`)
+            console.log(this.tool.category);
+            this.$http.get(`/api/tools/category/${this.tool.category.name}`)
                 .then((response) => {
                     this.likeTools = response.data;
                 })
@@ -66,10 +67,10 @@ namespace WhatAToolFinal.Controllers {
             //put request to remove from user toolList
             //remove from this.user.toolList (prevents from having to call an extra get to update current list)
             //on submit go to user page
-
+            console.log("Tool Returned");
         };
         constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService) {
-            this.$http.get(`/api/Persons/${this.$stateParams['id']}`)
+            this.$http.get(`/api/ApplicationUser/userBy/${this.$stateParams['id']}`)
                 .then((response) => {
                     this.user = response.data;
                 })
@@ -99,7 +100,7 @@ namespace WhatAToolFinal.Controllers {
                 });
         }
         public getUserList() {
-            this.$http.get('/api/users')
+            this.$http.get('/api/ApplicationUser')
                 .then((response) => {
                     this.userList = response.data;
                 })

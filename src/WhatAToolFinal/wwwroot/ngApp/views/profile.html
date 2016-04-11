@@ -3,7 +3,7 @@
 <div>Name: {{controller.user.name}} </div><br />
 <div>Title: {{controller.user.title}}</div><br />
 
-<div ng-show="controller.user.isAdmin">
+<div ng-show="account.getClaim('isAdmin')">
     <!--Need list page to bring up all the tools and users
      (can delete straight from this page). Need and Add/Edit page-->
 

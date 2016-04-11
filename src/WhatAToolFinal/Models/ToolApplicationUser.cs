@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace WhatAToolFinal.Models
 {
-    public class ToolPerson    
+    public class ToolApplicationUser    
     {
         public int Id { get; set; }
 
-        public int PersonId { get; set; }
-        [ForeignKey("PersonId")]
-        public Person Person { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser ApplicationUser { get; set; }
         
         public int ToolId { get; set; }
         [ForeignKey("ToolId")]

@@ -20,7 +20,7 @@ namespace WhatAToolFinal.Models
         public string Location { get; set; }
         public double MachineHours { get; set; }
 
-        public ICollection<ToolPerson> ToolPersons { get; set; }
+        public ICollection<ToolApplicationUser> ToolApplicationUsers { get; set; }
 
       
     }

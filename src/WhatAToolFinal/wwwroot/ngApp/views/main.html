@@ -7,16 +7,16 @@ Equipment|Category|Status|Location|Checked Out By|Expected Return Date-->
         <td>Category</td>
         <td>Status</td>
         <td>Location</td>
-        <td>Borrower</td>
-        <td>Return Date</td>
+        <td>Current User</td>
+        
     </tr>
     <tr ng-repeat="tool in controller.toolList">
         <td><a ui-sref="toolDetail({id:{{tool.id}}})">{{tool.name}}</a></td> <!--Will navigate to tool specific page-->
         <td>{{tool.category}}</td>
         <td>{{tool.status}} </td>
         <td>{{tool.location}}</td>
-        <td><a ui-sref="profile">John Smith</a></td>
-        <td>--</td>
+        <td><a ui-sref="profileDetail({id: tool.currentUser.id })">{{tool.currentUser.name}}</a></td>
+        
     </tr>
 
 </table>
@@ -28,7 +28,7 @@ Equipment|Category|Status|Location|Checked Out By|Expected Return Date-->
         
     </tr>
     <tr ng-repeat="u in controller.userList">
-        <td><a ui-sref="profileDetail({id:{{u.id}}})">{{u.name}}</a></td>
+        <td><a ui-sref="profileDetail({id: u.id })">{{u.name}}</a></td>
         <td>{{u.title}}</td>
     </tr>
 

@@ -18,7 +18,6 @@ namespace WhatAToolFinal.Models
         }
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Tool> Tools { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<ToolPerson> ToolPersons { get; set; }
+        public DbSet<ToolApplicationUser> ToolApplicationUsers { get; set; }
     }
 }

@@ -8,8 +8,8 @@ using WhatAToolFinal.Models;
 namespace WhatAToolFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160407215659_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20160408202005_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,9 +113,13 @@ namespace WhatAToolFinal.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("ImgUrl");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
@@ -130,6 +134,8 @@ namespace WhatAToolFinal.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Title");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -157,22 +163,6 @@ namespace WhatAToolFinal.Migrations
                     b.HasKey("Id");
                 });
 
-            modelBuilder.Entity("WhatAToolFinal.Models.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ImgUrl");
-
-                    b.Property<bool>("IsAdmin");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-                });
-
             modelBuilder.Entity("WhatAToolFinal.Models.Tool", b =>
                 {
                     b.Property<int>("Id")
@@ -195,18 +185,18 @@ namespace WhatAToolFinal.Migrations
                     b.HasKey("Id");
                 });
 
-            modelBuilder.Entity("WhatAToolFinal.Models.ToolPerson", b =>
+            modelBuilder.Entity("WhatAToolFinal.Models.ToolApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CheckOutDate");
 
-                    b.Property<int>("PersonId");
-
-                    b.Property<DateTime>("ReturnDate");
+                    b.Property<DateTime?>("ReturnDate");
 
                     b.Property<int>("ToolId");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
                 });
@@ -250,15 +240,15 @@ namespace WhatAToolFinal.Migrations
                         .HasForeignKey("CategoryId");
                 });
 
-            modelBuilder.Entity("WhatAToolFinal.Models.ToolPerson", b =>
+            modelBuilder.Entity("WhatAToolFinal.Models.ToolApplicationUser", b =>
                 {
-                    b.HasOne("WhatAToolFinal.Models.Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId");
-
                     b.HasOne("WhatAToolFinal.Models.Tool")
                         .WithMany()
                         .HasForeignKey("ToolId");
+
+                    b.HasOne("WhatAToolFinal.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
         }
     }
