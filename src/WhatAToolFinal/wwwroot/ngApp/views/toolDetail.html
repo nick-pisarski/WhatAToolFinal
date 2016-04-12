@@ -19,7 +19,7 @@ My Tools:
     <tr ng-repeat="t in controller.likeTools">
         <td class="text-center"><a ui-sref="toolDetail({id:{{t.id}}})">{{t.name}}</a></td>
         <td class="text-center">{{t.status}}</td>
-        <td class="text-center">--</td>
+        <td class="text-center">{{t.currentUser.name}}</td>
 
         
        

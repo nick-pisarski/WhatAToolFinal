@@ -12,6 +12,7 @@ namespace WhatAToolFinal.Services.ModelDTO
         public string Name { get; set; }
         public string Status { get; set; }
         public string ImageURL { get; set; }
-        public Category Category { get; set; }
+        public string Category { get; set; }
+        
     }
 }

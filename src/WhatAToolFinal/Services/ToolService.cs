@@ -47,9 +47,22 @@ namespace WhatAToolFinal.Services
                     }).ToList();
         }
 
-        public ICollection<Tool> GetListOfToolsByCategory(string category)
+        public ICollection<ToolMainDTO> GetListOfToolsByCategory(string category)
         {
-            return _toolRepo.GetListOfToolsByCategory(category).ToList();
+            return _toolRepo.GetListOfToolsByCategory(category).Select(t => new ToolMainDTO
+            {
+                Name = t.Name,
+                Id = t.Id,
+                Status = t.Status,
+                CurrentUser = (from tau in _tauRepo.List()
+                               where tau.ToolId == t.Id && tau.ReturnDate == null
+                               orderby tau.CheckOutDate descending
+                               select new UserDTO()
+                               {
+                                   Name = tau.ApplicationUser.Name,
+                                   Id = tau.ApplicationUser.Id
+                               }).FirstOrDefault()
+            }).ToList();
         }
 
         public ToolDetailDTO GetToolById(int id)
@@ -59,7 +72,7 @@ namespace WhatAToolFinal.Services
                 Name = t.Name,
                 Id = t.Id,
                 Status = t.Status,
-                Category = t.Category,
+                Category = t.Category.Name,
                 ImageURL = t.ImgUrl,
             }).FirstOrDefault();
         }

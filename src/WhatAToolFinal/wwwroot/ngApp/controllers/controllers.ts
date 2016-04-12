@@ -3,6 +3,8 @@ namespace WhatAToolFinal.Controllers {
     export class MainController {
         public toolList;
         public userList;
+        public sortType = 'toolName';
+        public sortReverse = false;
 
         constructor(private $http: ng.IHttpService) {
             this.getToolList();
@@ -36,7 +38,7 @@ namespace WhatAToolFinal.Controllers {
 
         public getLikeTools() {
             console.log(this.tool.category);
-            this.$http.get(`/api/tools/category/${this.tool.category.name}`)
+            this.$http.get(`/api/tools/category/${this.tool.category}`)
                 .then((response) => {
                     this.likeTools = response.data;
                 })
