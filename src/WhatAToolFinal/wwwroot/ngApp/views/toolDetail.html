@@ -1,7 +1,14 @@
-﻿<h1>{{controller.tool.name}}</h1>
+﻿<div class="row">
+    <div class="col-md-6">
+        <h1>{{controller.tool.name}}</h1>
 
-<div>Name: {{controller.tool.name}} </div><br />
-<div>Tool ID: {{controller.tool.id}}</div><br />
+        <div>Name: {{controller.tool.name}} </div><br />
+        <div>Tool ID: {{controller.tool.id}}</div><br />
+    </div>
+    <div class="col-md-6">
+        <img ng-src="{{controller.tool.imageURL}}" />
+    </div>
+</div>
 My Tools:
 <table class="table table-bordered table-striped">
     <tr>

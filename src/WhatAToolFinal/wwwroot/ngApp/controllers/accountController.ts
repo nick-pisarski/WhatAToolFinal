@@ -22,7 +22,7 @@ namespace WhatAToolFinal.Controllers {
             this.accountService.logout();
             this.$location.path('/');
         }
-
+        
         public getExternalLogins() {
             return this.accountService.getExternalLogins();
         }

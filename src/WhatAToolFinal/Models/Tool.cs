@@ -22,6 +22,6 @@ namespace WhatAToolFinal.Models
 
         public ICollection<ToolApplicationUser> ToolApplicationUsers { get; set; }
 
-      
+        
     }
 }
