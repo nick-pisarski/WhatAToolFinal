@@ -36,6 +36,19 @@ namespace WhatAToolFinal.Controllers {
         public tool;
         public likeTools; //a list of all the tools that are the same category
 
+        public checkOut() {
+            var t = {
+                toolId: this.tool.id,
+                
+            };
+            console.log(t);
+            this.$http.put('api/tools/checkOut', t)
+                .then((r) => {
+                    this.$state.go('main')
+                });
+
+        };
+
         public getLikeTools() {
             console.log(this.tool.category);
             this.$http.get(`/api/tools/category/${this.tool.category}`)
@@ -48,7 +61,7 @@ namespace WhatAToolFinal.Controllers {
 
         };
 
-        constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService) {
+        constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService, private $state: ng.ui.IStateService) {
             this.$http.get(`/api/tools/${this.$stateParams['id']}`)
                 .then((response) => {
                     this.tool = response.data;
@@ -62,19 +75,36 @@ namespace WhatAToolFinal.Controllers {
 
     export class ProfileDetailController {
         public user;
+        public toolList
 
         public returnTool(id) {
-            //popup or new page to get machine hours/?notes
-            //put request to change status
-            //put request to remove from user toolList
+            // Prompts, checks and ensures the user has entered a number NEEDS some work having issues with 3.0
+            var mh = prompt("Please enter the machine hours.", "ex. 4.5");
+            while (parseFloat(mh).toString() !== mh) {
+                mh = prompt("Please enter the machine hours.", "you must enter an number");
+            }
+            //put request to change status and machine hours
+            this.$http.put('api/tools/return', {
+                userId: this.user.id,
+                toolId: id,
+                machineHours: parseFloat(mh),
+                status: 'Available',
+            })
+                .then((r) => {
+                    this.$state.go('main')
+                });                
             //remove from this.user.toolList (prevents from having to call an extra get to update current list)
-            //on submit go to user page
+            
+            
             console.log("Tool Returned");
         };
-        constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService) {
+        constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService, private $state: ng.ui.IStateService) {
             this.$http.get(`/api/ApplicationUser/userBy/${this.$stateParams['id']}`)
                 .then((response) => {
+                    
                     this.user = response.data;
+                    this.toolList = this.user.tools;
+                    
                 })
 
         }
@@ -113,14 +143,6 @@ namespace WhatAToolFinal.Controllers {
 
     }
 
-    export class SecretController {
-        public secrets;
-
-        constructor($http: ng.IHttpService) {
-            $http.get('/api/secrets').then((results) => {
-                this.secrets = results.data;
-            });
-        }
-    }
+  
     
 }

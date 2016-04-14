@@ -8,7 +8,7 @@ namespace WhatAToolFinal.Services {
             this.$window.sessionStorage.setItem('userName', userInfo.userName);
             // store user id
             this.$window.sessionStorage.setItem('userId', userInfo.id);
-            console.log(userInfo.id);
+            
             // store claims
             this.$window.sessionStorage.setItem('claims', JSON.stringify(userInfo.claims));
         }

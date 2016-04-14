@@ -12,18 +12,21 @@ namespace WhatAToolFinal.Services
 {
     public class ToolService
 
-        //Add ToolDTO
+
     {
 
         private ToolRepository _toolRepo;
-        private ApplicationUserService _userServ;
+
         private ToolApplicationUserRepository _tauRepo;
 
-        public ToolService(ToolRepository toolRepo, ToolApplicationUserRepository tauRepo)
+        private ApplicationUserRepository _auRepo;
+
+        public ToolService(ToolRepository toolRepo, ToolApplicationUserRepository tauRepo, ApplicationUserRepository auRepo)
         {
             _toolRepo = toolRepo;
             _tauRepo = tauRepo;
-        //    _userServ = userServ;
+            _auRepo = auRepo;
+
         }
 
         public ICollection<ToolMainDTO> GetListOfTools()
@@ -67,14 +70,62 @@ namespace WhatAToolFinal.Services
 
         public ToolDetailDTO GetToolById(int id)
         {
-            return _toolRepo.GetToolById(id).Select( t => new ToolDetailDTO
+            return _toolRepo.GetToolById(id).Select(t => new ToolDetailDTO
             {
                 Name = t.Name,
                 Id = t.Id,
                 Status = t.Status,
                 Category = t.Category.Name,
                 ImageURL = t.ImgUrl,
+                MachineHours = t.MachineHours,
+                Manufacturer = t.Manufacturer,
             }).FirstOrDefault();
         }
+
+        public DateTime? ReturnTool(ReturnToolModelDTO tool, string username)
+        {
+            //get ToolAppUser
+            ToolApplicationUser tau = _tauRepo.GetCurrentTAUByToolId(tool.ToolId, username).Include(t => t.Tool).FirstOrDefault();
+
+            if (tau != null)
+            {
+                //update return date
+                tau.ReturnDate = DateTime.Now;
+                
+                //update a status and machinehours, save changes
+                tau.Tool.Status = "Available";
+                tau.Tool.MachineHours += tool.MachineHours;
+
+                //save changees
+                _toolRepo.SaveChanges();
+            }
+            return tau?.ReturnDate.Value;
+        }
+
+        public void CheckOutTool(ReturnToolModelDTO tool, string username)
+        {
+            //get the tool by Id
+            Tool t = _toolRepo.GetToolById(tool.ToolId).FirstOrDefault();
+            ApplicationUser u = _auRepo.GetPersonByUserName(username).FirstOrDefault();
+
+            if (t != null && u.Id != null)
+            {
+                //update a status save changes
+                t.Status = "Unavailable";
+
+                //Create tau
+                ToolApplicationUser tau = new ToolApplicationUser
+                {
+                    UserId = u.Id,
+                    ToolId = tool.ToolId,
+                    CheckOutDate = DateTime.Now
+                };
+                _tauRepo.Add(tau);
+
+                //save changees
+                _toolRepo.SaveChanges();
+            }
+        }
+
     }
 }

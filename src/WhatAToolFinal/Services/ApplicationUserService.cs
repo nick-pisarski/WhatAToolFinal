@@ -31,8 +31,18 @@ namespace WhatAToolFinal.Services
             return _auRepo.GetPersonById(id).Select(u => new AppUserDTO {
                 Id = u.Id,
                 Name = u.Name,
-                Title = u.Title
-            }).FirstOrDefault();
+                Title = u.Title,
+                Tools = (from tau in u.ToolApplicationUsers
+                         select new UserToolListDTO()
+                         {
+                             Id = tau.ToolId,
+                             Name = tau.Tool.Name,
+                             CheckOutDate = tau.CheckOutDate,
+                             ReturnDate = tau.ReturnDate,
+                         }).ToList()
+
+        }).FirstOrDefault();
+        
         }
        
 

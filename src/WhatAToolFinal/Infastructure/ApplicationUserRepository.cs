@@ -16,5 +16,9 @@ namespace WhatAToolFinal.Infastructure
         {
             return _db.Users.Where(p => p.Id == id).Select(p => p);
         }
+        public IQueryable<ApplicationUser> GetPersonByUserName(string username)
+        {
+            return _db.Users.Where(p => p.UserName == username).Select(p => p);
+        }
     }
 }

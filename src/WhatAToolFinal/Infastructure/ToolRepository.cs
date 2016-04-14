@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhatAToolFinal.Models;
-using WhatAToolFinal.Services.ModelDTO;
+
 
 namespace WhatAToolFinal.Infastructure
 {
@@ -22,6 +22,7 @@ namespace WhatAToolFinal.Infastructure
         {
             return _db.Tools.Where(t => t.Id == id).Select(t => t);
         }
+ 
 
     }
 }

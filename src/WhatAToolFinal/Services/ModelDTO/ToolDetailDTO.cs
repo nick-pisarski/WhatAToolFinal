@@ -13,6 +13,8 @@ namespace WhatAToolFinal.Services.ModelDTO
         public string Status { get; set; }
         public string ImageURL { get; set; }
         public string Category { get; set; }
+        public string Manufacturer { get; set; }
+        public double MachineHours { get; set; }
         
     }
 }

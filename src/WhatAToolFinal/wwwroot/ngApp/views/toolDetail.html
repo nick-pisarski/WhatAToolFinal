@@ -4,27 +4,28 @@
 
         <div>Name: {{controller.tool.name}} </div><br />
         <div>Tool ID: {{controller.tool.id}}</div><br />
+        <div>Manufacturer: {{controller.tool.manufacturer}}</div><br />
+        <div>Machine Hours: {{controller.tool.machineHours}}</div><br />
+        <div>Current Status: {{controller.tool.status}}</div><br />
+
     </div>
     <div class="col-md-6">
-        <img ng-src="{{controller.tool.imageURL}}" />
+        <img class="tool-img center-block" ng-src="{{controller.tool.imageURL}}" />
+        <div class="text-center" ng-show="controller.tool.status == 'Available'"><a ng-click="controller.checkOut()">Check Out</a></div>
     </div>
 </div>
-My Tools:
+
+Similar Tools of Category {{controller.tool.category}}:
 <table class="table table-bordered table-striped">
     <tr>
-        <td class="text-center">Tool Name:</td>
-        <td class="text-center">Status:</td>
-        <td class="text-center">Person:</td>
+        <td class="text-center table-header">Tool Name:</td>
+        <td class="text-center table-header">Status:</td>
+        <td class="text-center table-header">Person:</td>
     </tr>
     <tr ng-repeat="t in controller.likeTools">
         <td class="text-center"><a ui-sref="toolDetail({id:{{t.id}}})">{{t.name}}</a></td>
         <td class="text-center">{{t.status}}</td>
         <td class="text-center">{{t.currentUser.name}}</td>
-
-        
-       
-        <!--on click this will changed the status/return date and clear the person
-        on this current tool.-->
     </tr>
 
 </table>

@@ -1,11 +1,14 @@
 #bg-img {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-image: url('../images/hrt-concrete-wall-01.jpg');
     background-size: cover;
+}
+body {
+    background-image: url('../images/hrt-concrete-wall-01.jpg');
 }
 
 /* Wrapping element */
@@ -39,13 +42,24 @@ textarea {
 }
 
 img {
-    padding-top: 0;
+    padding: 10px;
     height: 200px;
     width: 200px;
 }
 
+.tool-img {
+    height: 200px;
+    padding: 25px;
+}
+
 .mainView{
     padding: 20px;
+    background-color: whitesmoke;
+}
+.mainView-nav{
+    padding: 10px;
+    height: 200px;
+    
     background-color: whitesmoke;
 }
 
@@ -54,6 +68,11 @@ img {
     font-size: 9px;
 }
 
-.disabled {
-    cursor: not-allowed;
+.table-header{
+    background-color:#283662;
+    color: whitesmoke;
 }
+
+    .table-header a {
+        color: whitesmoke;
+    }

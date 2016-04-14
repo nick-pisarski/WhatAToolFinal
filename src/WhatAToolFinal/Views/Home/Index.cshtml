@@ -8,27 +8,37 @@
     <base href="/" />
 </head>
 <body ng-controller="AccountController as account">
-    <div id="bg-img" />
+    @*<div id="bg-img" />*@
     <div class="container">
+
         <div class="row">
+            <!--Picture with Logo-->
             <div class="col-md-3">
-                <a ui-sref="main" ng-disabled="account.isLoggedIn()"><img src="~/images/WATALogo.jpg" height="120" width="120" /></a>
+                <a ui-sref="main"><img src="~/images/WATALogo.jpg" height="120" width="120" /></a>
             </div>
-            <div class="col-md-6 text-center">
+
+            <!--Main Title-->
+            <div class="col-md-7 text-center">
                 <h1>Welcome to WhatA Tool</h1>
             </div>
-            <div class="col-md-3 text-right mainView">
-                <a ui-sref="main">Home</a> <br />
-                <a ui-sref="profileDetail({id: account.getUserId() })" ng-class="{disabled: !account.isLoggedIn()}">Profile</a> <br />
+
+            <!--Page Controller-->
+            <div class="col-md-2 text-center mainView-nav">
+
+                <a ui-sref="main" ng-show="account.isLoggedIn()">Home</a> <br />
+
+                <a ui-sref="profileDetail({id: account.getUserId() })" ng-show="account.isLoggedIn()">Profile</a> <br />
+
                 <a ui-sref="login" ng-show="!account.isLoggedIn()">Login</a>
                 <a ui-sref="login" ng-click="account.logout()" ng-show="account.isLoggedIn()">Logout</a>
                 <div ng-show="account.isLoggedIn()">
                     [{{account.getUserName()}}]
                 </div>
             </div>
-
         </div>
         <hr />
+
+        <!--Main View-->
         <div class="row mainView">
             <ui-view></ui-view>
         </div>

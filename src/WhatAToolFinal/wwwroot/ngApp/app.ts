@@ -11,31 +11,37 @@ namespace WhatAToolFinal {
                 url: '/',
                 templateUrl: '/ngApp/views/main.html',
                 controller: WhatAToolFinal.Controllers.MainController,
-                controllerAs: 'controller'
+                controllerAs: 'controller',
+                data: {
+                    requiresAuthentication: true
+                }
             })
             .state('toolDetail', {
                 url: '/tool/details/:id',
                 templateUrl: '/ngApp/views/toolDetail.html',
                 controller: WhatAToolFinal.Controllers.ToolDetailController,
-                controllerAs: 'controller'
+                controllerAs: 'controller',
+                data: {
+                    requiresAuthentication: true
+                }
             })
             .state('profileDetail', {
                 url: '/profile/details/:id',
                 templateUrl: '/ngApp/views/profile.html',
                 controller: WhatAToolFinal.Controllers.ProfileDetailController,
-                controllerAs: 'controller'
+                controllerAs: 'controller',
+                data: {
+                    requiresAuthentication: true
+                }
             })
             .state('adminList', {
                 url: '/admin/list',
                 templateUrl: '/ngApp/views/adminList.html',
                 controller: WhatAToolFinal.Controllers.AdminListController,
-                controllerAs: 'controller'
-            })
-            .state('secret', {
-                url: '/secret',
-                templateUrl: '/ngApp/views/secret.html',
-                controller: WhatAToolFinal.Controllers.SecretController,
-                controllerAs: 'controller'
+                controllerAs: 'controller',
+                data: {
+                    requiresAuthentication: true
+                }
             })
             .state('login', {
                 url: '/login',
@@ -92,6 +98,20 @@ namespace WhatAToolFinal {
         $httpProvider.interceptors.push('authInterceptor');
     });
 
-    
+    angular.module('WhatAToolFinal').run((
+        $rootScope: ng.IRootScopeService,
+        $state: ng.ui.IStateService,
+        accountService: WhatAToolFinal.Services.AccountService
+    ) => {
+        $rootScope.$on('$stateChangeStart', (e, to) => {
+            // protect non-public views
+            if (to.data && to.data.requiresAuthentication) {
+                if (!accountService.isLoggedIn()) {
+                    e.preventDefault();
+                    $state.go('login');
+                }
+            }
+        });
+    });
 
 }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using WhatAToolFinal.Services;
+using Microsoft.AspNet.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WhatAToolFinal.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class ApplicationUserController : Controller
     {
         public ApplicationUserService _auService;

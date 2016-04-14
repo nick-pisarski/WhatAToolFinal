@@ -132,7 +132,7 @@ namespace WhatAToolFinal
 
 
             // initialize sample data
-            SampleData2.Initialize(app.ApplicationServices);
+            //SampleData2.Initialize(app.ApplicationServices);
            
 
         }
