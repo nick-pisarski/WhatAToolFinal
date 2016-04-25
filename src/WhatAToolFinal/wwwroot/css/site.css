@@ -7,6 +7,7 @@
     background-image: url('../images/hrt-concrete-wall-01.jpg');
     background-size: cover;
 }
+
 body {
     background-image: url('../images/hrt-concrete-wall-01.jpg');
 }
@@ -52,27 +53,33 @@ img {
     padding: 25px;
 }
 
-.mainView{
+.mainView {
     padding: 20px;
     background-color: whitesmoke;
 }
-.mainView-nav{
+
+.mainView-nav {
     padding: 10px;
     height: 200px;
-    
     background-color: whitesmoke;
 }
 
-.smLink{
+.smLink {
     cursor: pointer;
     font-size: 9px;
 }
 
-.table-header{
-    background-color:#283662;
+.table-header {
+    background-color: #283662;
     color: whitesmoke;
 }
 
     .table-header a {
         color: whitesmoke;
     }
+
+.title-header{
+    background-color: whitesmoke;
+    border-radius: 10px;
+    font-family: 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

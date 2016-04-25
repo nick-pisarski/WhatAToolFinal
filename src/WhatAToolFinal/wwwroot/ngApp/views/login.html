@@ -1,21 +1,33 @@
-<fieldset>
-    <legend>Login</legend>
-    <ul>
-        <li ng-repeat="error in controller.validationMessages">
-            {{error}}
-        </li>
-    </ul>
+<div>
+    <fieldset class="col-md-6">
+        <legend>Login</legend>
+        <ul>
+            <li ng-repeat="error in controller.validationMessages">
+                {{error}}
+            </li>
+        </ul>
 
-    <form role="form" ng-submit="controller.login()">
-        <div class="form-group">
-            <label>Email:</label> <br />
-            <input ng-model="controller.loginUser.email" />
-        </div>
-        <div class="form-group">
-            <label>Password:</label> <br />
-            <input ng-model="controller.loginUser.password" />
-        </div>
-        <input type="submit" value="Login" />
-        <a href="/register">Register</a>
-    </form>
-</fieldset>
+        <form role="form" ng-submit="controller.login()">
+            <div class="form-group">
+                <label>Email:</label> <br />
+                <input ng-model="controller.loginUser.email" />
+            </div>
+            <div class="form-group">
+                <label>Password:</label> <br />
+                <input ng-model="controller.loginUser.password" />
+            </div>
+            <input type="submit" value="Login" />
+            <a href="/register">Register</a>
+        </form>
+    </fieldset>
+    <div class="col-md-6 center">
+        <pre class="text-center" style="font-family:Arial">
+        Please note that this website if for demonstration. It was
+        completed as an indiviual project and its intended purpose 
+        is to show the work of its creator. If you would like to 
+        see it please login as an admistrator. (Username: 
+        art@email.com, Password: Secret123!) or as a normal user 
+        (Username: art@email.com, Password: Secret123!).        
+    </pre>
+    </div>
+</div>
