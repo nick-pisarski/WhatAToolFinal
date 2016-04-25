@@ -55,15 +55,20 @@ img {
 
 .mainView {
     padding: 20px;
+    border-radius: 25px;
     background-color: whitesmoke;
 }
 
 .mainView-nav {
     padding: 10px;
     height: 200px;
+    border-radius: 25px;
     background-color: whitesmoke;
 }
 
+.clink {
+    cursor: pointer;
+}
 .smLink {
     cursor: pointer;
     font-size: 9px;

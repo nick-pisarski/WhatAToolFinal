@@ -38,19 +38,14 @@ namespace WhatAToolFinal.Controllers {
 
         public checkOut() {
             var t = {
-                toolId: this.tool.id,
-                
+                ToolId: this.tool.id
             };
-            console.log(t);
             this.$http.put('api/tools/checkOut', t)
                 .then((r) => {
                     this.$state.go('main')
                 });
-
         };
-
         public getLikeTools() {
-            console.log(this.tool.category);
             this.$http.get(`/api/tools/category/${this.tool.category}`)
                 .then((response) => {
                     this.likeTools = response.data;
@@ -58,9 +53,7 @@ namespace WhatAToolFinal.Controllers {
                 .catch((response) => {
                     console.error('Failed to retrieve list of tools.');
                 });
-
         };
-
         constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService, private $state: ng.ui.IStateService) {
             this.$http.get(`/api/tools/${this.$stateParams['id']}`)
                 .then((response) => {
@@ -75,7 +68,7 @@ namespace WhatAToolFinal.Controllers {
 
     export class ProfileDetailController {
         public user;
-        public toolList
+        public toolList;
 
         public returnTool(id) {
             // Prompts, checks and ensures the user has entered a number NEEDS some work having issues with 3.0
@@ -91,24 +84,22 @@ namespace WhatAToolFinal.Controllers {
                 status: 'Available',
             })
                 .then((r) => {
-                    this.$state.go('main')
-                });                
-            //remove from this.user.toolList (prevents from having to call an extra get to update current list)
-            
-            
-            console.log("Tool Returned");
+                    for (var i = this.toolList.length - 1; i >= 0; i--) {
+                        if (this.toolList[i].id == id && this.toolList[i].returnDate == null) {
+                            this.toolList.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                });
         };
         constructor(private $http: ng.IHttpService, private $stateParams: ng.ui.IStateParamsService, private $state: ng.ui.IStateService) {
             this.$http.get(`/api/ApplicationUser/userBy/${this.$stateParams['id']}`)
                 .then((response) => {
-                    
                     this.user = response.data;
                     this.toolList = this.user.tools;
-                    
                 })
-
         }
-
     }
 
     export class AdminListController {
@@ -124,7 +115,6 @@ namespace WhatAToolFinal.Controllers {
         public getToolList() {
             this.$http.get('/api/tools')
                 .then((response) => {
-
                     this.toolList = response.data;
                 })
                 .catch((response) => {
@@ -143,6 +133,6 @@ namespace WhatAToolFinal.Controllers {
 
     }
 
-  
-    
+
+
 }

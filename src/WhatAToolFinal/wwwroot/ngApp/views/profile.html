@@ -20,13 +20,13 @@ My Tools:
         <td class="text-center table-header">Tool Name:</td>
         <td class="text-center table-header">Check Out Date:</td>
         <td class="text-center table-header">Return Date:</td>
-        <td class="text-center table-header" ng-show="account.getUserId() == controller.user.id">Return Tool</td>
+        <td class="text-center table-header" ng-show="(account.getUserId() == controller.user.id)  && !tool.returnDate">Return Tool</td>
     </tr>
     <tr ng-repeat="tool in controller.toolList | orderBy:'checkOutDate':true | limitTo:10">
         <td><a ui-sref="toolDetail({id:{{tool.id}}})">{{tool.name}}</a></td> <!--Link to the tool modal if possible-->
         <td class="text-center">{{tool.checkOutDate.substring(0,10)}}</td>
         <td class="text-center">{{tool.returnDate.substring(0,10)}}</td>
-        <td class="text-center" ng-show="(account.getUserId() == controller.user.id) && !tool.returnDate"><a ng-click="controller.returnTool(tool.id)">Return</a></td> 
+        <td class="text-center" ><a ng-click="controller.returnTool(tool.id)" ng-show="(account.getUserId() == controller.user.id) && !tool.returnDate">Return</a></td> 
         <!--on click this will changed the status/return date and clear the person
         on this current tool.-->
     </tr>
